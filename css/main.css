@@ -1,2 +1,43 @@
 
 /*  Put your CSS Here */
+
+.container {
+    width: 1000px;
+    height: 800px;
+}
+
+.stack {
+    cursor: pointer;
+    width: 30px;
+    background-color: black;
+    margin: 300px 150px 0px 150px;
+    height: 600px;
+    display: inline-block;
+    position: relative;
+}
+
+.disk {
+    height: 30px;
+    border: 2px solid #000;
+    border-radius: 10px;
+}
+
+#disk_1 {
+    background-color: blue;
+    width: 110px;
+}
+
+.disk_2 {
+    background-color: purple;
+    width: 140px;
+}
+
+.disk_3 {
+    background-color: green;
+    width: 170px;
+}
+
+.disk_4 {
+    background-color: red;
+    width: 200px;
+}
