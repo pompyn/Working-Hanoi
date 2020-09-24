@@ -1,19 +1,4 @@
 // Add Your Code Here...
-class disk {
-    constructor(size) {
-        this.size = size;
-    }
-
-    moveDisk(newStack) {
-        const existingDisks = newStack.filter(x => x.size < this.size);
-        if (existingDisks) {
-            return false;
-        }
-        newStack.push(this);
-        return true;
-    }
-}
-
 const divs = document.querySelectorAll('.stack');
 
 divs.forEach(el => el.addEventListener('click', event => {
@@ -39,7 +24,7 @@ const init = () => {
     //get our first stack
     const firstStack = stackObj.find(x => x.name == startingStack);
     diskLoop.forEach(x => {
-        firstStack.disks.push(new disk(x));
+        firstStack.disks.unshift(x);
     });
     displayStacks();
 }
@@ -47,31 +32,42 @@ const init = () => {
 const displayStacks = () => {
     stackObj.forEach(x => {
         const stackContainer = document.querySelector(`#${x.name}`);
+        stackContainer.innerHTML = '';
         x.disks.forEach(y => {
             const newDiv = document.createElement("div");
             newDiv.classList.add('disk');
-            newDiv.classList.add(`disk_${y.size}`);
+            newDiv.classList.add(`disk_${y}`);
             stackContainer.appendChild(newDiv);
         });
     });
 }
 
-const moveDisk = (oldStack, newStack) => {
-    const topDisk = oldStack && oldStack[0];
-    if (!topDisk) {
-        //say there is no top disk
+const moveSingleDisk = (size, stack) => {
+    if (stack[stack.length - 1] < size) {
+        return false
+    }
+    stack.push(size);
+    return true;
+}
+
+const moveStack = (oldStack, newStack) => {
+    const oldStackDisks = stackObj.find(x => x.name == oldStack).disks;
+    const newStackDisks = stackObj.find(x => x.name == newStack).disks;
+
+    const topOldDisk = oldStackDisks[oldStackDisks.length - 1];
+    if (!topOldDisk) {
+        alert('This stack does not have a disks');
         clearStacks();
         return;
     }
 
-    if (!topDisk.moveDisk(newStack)) {
-        //say that you can't move the disk onto a smaller disk
+    if (!moveSingleDisk(topOldDisk, newStackDisks)) {
+        alert('You cannot move the disk onto a smaller disk');
         clearStacks();
         return;
     }
 
-    oldStack.pop();
-
+    oldStackDisks.pop();
     displayStacks();
     clearStacks();
 }
@@ -88,49 +84,19 @@ const handleMouseClick = (e) => {
 
     if (oldSelectedStack == clickedStackId) {
         alert('Sorry, this is the same stack you already clicked.');
+        clearStacks();
         return;
     }
     if (oldSelectedStack) {
         newSelectedStack = clickedStackId
+    } else {
+        oldSelectedStack = clickedStackId
     }
-    oldSelectedStack = clickedStackId
 
     if (oldSelectedStack && newSelectedStack) {
-        moveDisk(oldSelectedStack, newSelectedStack);
+        moveStack(oldSelectedStack, newSelectedStack);
     }
 }
 
 init();
-
-// function main() {
-
-// }
-// function towerClickEvent() {
-//     const clickedTowerNode = towerClickEvent.target
-//     const currentTarget = towerClickEvent.currentTarget
-// }
-// const TowerA = document.querySelector("#TowerA")
-// const TowerB = document.querySelector("#TowerB")
-// const TowerC = document.querySelector("#TowerC")
-// const one = document.querySelector("one")
-// const two = document.querySelector("two")
-// const three = document.querySelector("three")
-// const four = document.querySelector("four")
-// TowerA.addEventListener("click", function (towerClickEvent) {
-//     const clickedTowerNode = towerClickEvent.target
-//     console.log(towerClickEvent)
-//     TowerA.append(towerClickEvent)
-
-// })
-
-// TowerB.addEventListener("click", function (towerClickEvent) {
-//     const clickedTowerNode = towerClickEvent.target
-//     console.log(towerClickEvent)
-//     TowerB.append(towerClickEvent)
-
-// })
-
-// TowerC.addEventListener("click", function (towerClickEvent) {
-//     const clickedTowerNode = towerClickEvent.target
-//     TowerC.append(towerClickEvent)
-// })
+//Received assistance from tutor Ayodele Jackson

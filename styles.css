@@ -2,27 +2,31 @@
 /*  Put your CSS Here */
 
 .container {
-    width: 1000px;
-    height: 800px;
+    width: 300px;
+    height: 400px;
+    margin-left: 50px;
+    display: inline-block;
 }
 
 .stack {
     cursor: pointer;
     width: 30px;
     background-color: black;
-    margin: 300px 150px 0px 150px;
-    height: 600px;
-    display: inline-block;
-    position: relative;
+    margin: 30px 50px 0px 50px;
+    height: 300px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
 }
 
 .disk {
     height: 30px;
     border: 2px solid #000;
     border-radius: 10px;
+    cursor: auto;
 }
 
-#disk_1 {
+.disk_1 {
     background-color: blue;
     width: 110px;
 }
@@ -40,4 +44,14 @@
 .disk_4 {
     background-color: red;
     width: 200px;
+}
+
+.tower {
+    margin-left: 45px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.offset {
+    margin-left: 35px;
 }
